@@ -10,7 +10,7 @@
           </div>
         </div>
         <h3 class="text-white fade-in">Muhammad Abi Rafdi</h3>
-        <p class="text-white fade-in">Frontend Developer</p>
+        <p class="text-white fade-in">Web Developer</p>
         <div class="social-links mt-3 fade-in-up">
           <a href="#" class="btn btn-outline-light me-2 hover-effect"><i class="bi bi-github"></i></a>
           <a href="#" class="btn btn-outline-light me-2 hover-effect"><i class="bi bi-linkedin"></i></a>
@@ -21,7 +21,7 @@
       <div class="col-md-8">
         <div class="mb-4 fade-in-right">
           <h3 class="text-white slide-in">My Story</h3>
-          <p class="text-white fade-in">Hello! I'm Abi, a passionate frontend developer with over 3 years of experience
+          <p class="text-white fade-in">Hello! I'm Abi, a passionate Web developer with over 3 years of experience
             in creating dynamic web
             applications. My journey in web development began during my college years when I built my first website
             using HTML and CSS.</p>

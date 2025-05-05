@@ -131,7 +131,7 @@ export default {
         },
         {
           name: 'Eko Faisal',
-          role: 'Frontend Developer',
+          role: 'Web Developer',
           bio: 'Specializing in modern JavaScript frameworks, Eko is passionate about creating seamless user experiences across devices.',
           initials: 'EF'
         }
