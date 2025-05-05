@@ -112,6 +112,32 @@
 </template>
 
 <script>
+// Import travel images
+import travel1 from '@/assets/travel/travel1.jpg'
+import travel2 from '@/assets/travel/travel2.jpg'
+import travel3 from '@/assets/travel/travel3.jpg'
+import travel4 from '@/assets/travel/travel4.jpg'
+import travel5 from '@/assets/travel/travel5.jpg'
+import travel6 from '@/assets/travel/travel6.jpg'
+import travel7 from '@/assets/travel/travel7.jpg'
+import travel8 from '@/assets/travel/travel8.jpg'
+import travel9 from '@/assets/travel/travel9.jpg'
+import travel10 from '@/assets/travel/travel10.jpg'
+import travel11 from '@/assets/travel/travel11.jpg'
+import travel12 from '@/assets/travel/travel12.jpg'
+import travel13 from '@/assets/travel/travel13.jpg'
+import travel14 from '@/assets/travel/travel14.jpg'
+import travel15 from '@/assets/travel/travel15.jpg'
+
+// Import personal images
+import me1 from '@/assets/me/me1.jpg'
+import me2 from '@/assets/me/me2.jpg'
+import me3 from '@/assets/me/me3.jpg'
+import me4 from '@/assets/me/me4.jpg'
+import me5 from '@/assets/me/me5.jpg'
+import me7 from '@/assets/me/me7.jpg'
+import me8 from '@/assets/me/me8.jpg'
+
 export default {
   name: 'Gallery',
   data() {
@@ -120,129 +146,141 @@ export default {
       galleryViewOpen: false,
       currentPhotoIndex: 0,
       isLoading: true,
-      // Inside the photos array in the data() method, update to match your actual images:
-
       photos: [
         // Travel/View Photos
         {
           title: 'Ferry Approaching Kobe Harbor',
           description: 'A passenger ferry navigates the blue waters of Kobe Harbor on a clear day, with the distinctive architecture of the port visible in the background.',
           category: 'view',
-          src: '/src/assets/travel/travel10.jpg'
+          src: travel10
         },
         {
           title: 'Urban Shopping Center',
           description: 'A modern shopping complex featuring a large white facade with the "umie" logo visible, showcasing contemporary Japanese architectural design.',
           category: 'view',
-          src: '/src/assets/travel/travel11.jpg'
+          src: travel11
         },
         {
           title: 'Bustling Chinatown Market Street',
           description: 'A vibrant, crowded street in Chinatown decorated with red traditional banners and lanterns overhead, filled with visitors exploring the cultural district.',
           category: 'view',
-          src: '/src/assets/travel/travel12.jpg'
+          src: travel12
         },
         {
           title: 'Elevated Shopping District Walkway',
           description: 'An elevated pedestrian walkway connecting large department stores in a major Japanese city, with urban infrastructure and modern buildings visible.',
           category: 'view',
-          src: '/src/assets/travel/travel13.jpg'
+          src: travel13
         },
         {
           title: 'Tsutenkaku Tower at Night',
           description: 'The iconic Tsutenkaku Tower illuminated with vibrant blue lighting against the night sky, showcasing its distinctive architectural features.',
           category: 'view',
-          src: '/src/assets/travel/travel14.jpg'
+          src: travel14
         },
         {
           title: 'Canton Tower with Rainbow Illumination',
           description: 'A spectacular night view of the Canton Tower with its distinctive shape brilliantly illuminated in rainbow colors against the dark city skyline.',
           category: 'view',
-          src: '/src/assets/travel/travel15.jpg'
+          src: travel15
         },
         {
           title: 'View from Airplane Window',
           description: 'A serene view from an airplane window showing the aircraft\'s wing against a golden sunset sky with clouds visible below.',
           category: 'view',
-          src: '/src/assets/travel/travel1.jpg'
+          src: travel1
         },
         {
           title: 'Modern Transportation Infrastructure',
           description: 'An architectural photograph showing Japan\'s modern transportation facilities with clean, minimalist design against a clear blue sky.',
           category: 'view',
-          src: '/src/assets/travel/travel2.jpg'
+          src: travel2
         },
         {
           title: 'Traditional Japanese Shrine',
           description: 'A beautiful traditional Japanese shrine structure displaying numerous white paper lanterns with Japanese calligraphy written on them.',
           category: 'view',
-          src: '/src/assets/travel/travel3.jpg'
+          src: travel3
         },
         {
           title: 'Lawson Convenience Store',
           description: 'A modern Lawson convenience store building with minimalist design situated in a park or recreational area surrounded by trees.',
           category: 'view',
-          src: '/src/assets/travel/travel4.jpg'
+          src: travel4
         },
         {
           title: 'Castle Moat and Stone Walls',
           description: 'The impressive stone walls and moat of a traditional Japanese castle, showcasing the skilled stonework of the defensive walls.',
           category: 'view',
-          src: '/src/assets/travel/travel5.jpg'
+          src: travel5
         },
         {
           title: 'Geometric Glass Ceiling',
           description: 'An artistic view looking up at a geometric triangular glass ceiling structure in a modern museum or cultural center in Japan.',
           category: 'view',
-          src: '/src/assets/travel/travel6.jpg'
+          src: travel6
         },
         {
           title: 'Historical Marker',
           description: 'A memorial plaque or historical marker embedded in stonework, containing Japanese text about the site\'s historical significance.',
           category: 'view',
-          src: '/src/assets/travel/travel7.jpg'
+          src: travel7
         },
         {
           title: 'Urban Shopping District',
           description: 'A street-level view of a commercial district featuring the distinctive glass facade of a shopping mall against a blue sky.',
           category: 'view',
-          src: '/src/assets/travel/travel8.jpg'
+          src: travel8
         },
         {
           title: 'Modern Shopping Atrium',
           description: 'The interior of a contemporary shopping center with a dramatic glass roof, showing multiple levels of retail spaces and colorful design elements.',
           category: 'view',
-          src: '/src/assets/travel/travel9.jpg'
+          src: travel9
         },
 
-        // Me Photos - Create placeholders (update these as needed)
+        // Me Photos - Now with imported paths
         {
+          title: 'Personal Photo 1',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me1.jpg'
+          src: me1
         },
         {
+          title: 'Personal Photo 2',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me2.jpg'
+          src: me2
         },
         {
+          title: 'Personal Photo 3',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me3.jpg'
+          src: me3
         },
         {
+          title: 'Personal Photo 4',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me4.jpg'
+          src: me4
         },
         {
+          title: 'Personal Photo 5',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me5.jpg'
+          src: me5
         },
         {
+          title: 'Personal Photo 7',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me7.jpg'
+          src: me7
         },
         {
+          title: 'Personal Photo 8',
+          description: 'Personal photograph',
           category: 'me',
-          src: '/src/assets/me/me8.jpg'
+          src: me8
         }
       ]
     }
