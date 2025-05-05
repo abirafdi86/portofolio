@@ -144,6 +144,13 @@
 </template>
 
 <script>
+// Import images directly
+import image1 from '@/assets/project/image1.png'
+import image2 from '@/assets/project/image2.png'
+import image3 from '@/assets/project/image3.png'
+import image4 from '@/assets/project/image4.png'
+import image5 from '@/assets/project/image5.png'
+
 export default {
   name: 'Projects',
   data() {
@@ -160,11 +167,11 @@ export default {
           tags: ['Vue.js', 'JavaScript', 'Bootstrap', 'LocalStorage'],
           category: 'utility',
           images: [
-            '/src/assets/project/image1.png',
-            '/src/assets/project/image2.png',
-            '/src/assets/project/image3.png',
-            '/src/assets/project/image4.png',
-            '/src/assets/project/image5.png'
+            image1,
+            image2,
+            image3,
+            image4,
+            image5
           ],
           demoLink: 'https://aplikasi-remi.netlify.app/',
           githubLink: '#'
