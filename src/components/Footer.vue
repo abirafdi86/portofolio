@@ -14,10 +14,10 @@
       <div class="footer-section navigation">
         <h4 class="footer-heading">Navigation</h4>
         <ul class="footer-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/about-me">About Me</router-link></li>
-          <li><router-link to="/project">Projects</router-link></li>
-          <li><router-link to="/gallery">Gallery</router-link></li>
+          <li><router-link to="/" @click.native="scrollToTop">Home</router-link></li>
+          <li><router-link to="/about-me" @click.native="scrollToTop">About Me</router-link></li>
+          <li><router-link to="/project" @click.native="scrollToTop">Projects</router-link></li>
+          <li><router-link to="/gallery" @click.native="scrollToTop">Gallery</router-link></li>
         </ul>
       </div>
 
@@ -67,7 +67,15 @@
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  methods: {
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
 }
 </script>
 

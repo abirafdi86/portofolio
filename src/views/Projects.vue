@@ -194,6 +194,12 @@ export default {
       // Close any expanded project when filter changes
       this.expandedProject = null
     },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    },
     toggleProject(index) {
       // Toggle expanded state
       if (this.expandedProject === index) {
@@ -215,6 +221,8 @@ export default {
           }
         }, 100)
       }
+
+      this.scrollToTop();
     },
     prevImage(projectIndex) {
       if (this.activeImageIndex[projectIndex] > 0) {

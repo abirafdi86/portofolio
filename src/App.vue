@@ -45,6 +45,16 @@
       </a>
     </div>
 
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top-button" :class="{ 'show': showScrollTop }" @click="scrollToTop">
+      <div class="scroll-to-top-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="scroll-to-top-svg">
+          <path
+            d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+        </svg>
+      </div>
+    </div>
+
     <Footer />
   </div>
 </template>
@@ -58,6 +68,29 @@ export default {
   components: {
     Footer,
     TechBackground
+  },
+  data() {
+    return {
+      showScrollTop: false
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      // Show button when user scrolls down 200px from the top
+      this.showScrollTop = window.scrollY > 200
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
   }
 }
 </script>
@@ -131,6 +164,57 @@ footer {
 .whatsapp-text {
   font-weight: bold;
   font-size: 14px;
+}
+
+/* Scroll to Top Button Styles */
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background-color: rgba(13, 17, 23, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+}
+
+.scroll-to-top-button.show {
+  opacity: 0.8;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top-button:hover {
+  opacity: 1;
+  background-color: rgba(13, 17, 23, 0.8);
+  transform: scale(1.1);
+  border-color: rgba(100, 255, 218, 0.6);
+}
+
+.scroll-to-top-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-to-top-svg {
+  fill: #ffffff;
+  width: 100%;
+  height: 100%;
 }
 
 /* Navbar styling tweaks */
