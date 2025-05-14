@@ -145,11 +145,14 @@
 
 <script>
 // Import images directly
-import image1 from '@/assets/project/image1.png'
-import image2 from '@/assets/project/image2.png'
-import image3 from '@/assets/project/image3.png'
-import image4 from '@/assets/project/image4.png'
-import image5 from '@/assets/project/image5.png'
+import remi1 from '@/assets/project/remi1.png'
+import remi2 from '@/assets/project/remi2.png'
+import remi3 from '@/assets/project/remi3.png'
+import remi4 from '@/assets/project/remi4.png'
+import remi5 from '@/assets/project/remi5.png'
+import remi6 from '@/assets/project/remi6.png'
+import remi7 from '@/assets/project/remi7.png'
+import remi8 from '@/assets/project/remi8.png'
 
 export default {
   name: 'Projects',
@@ -161,17 +164,20 @@ export default {
       isLoading: true,
       projects: [
         {
-          title: 'Rummy Score Calculator App',
+          title: 'Rummy Live Score Calculator App',
           description: 'An app to calculate and track scores in the Rummy card game.',
-          detailedDescription: 'The Rummy Score Calculator App is a digital solution designed to help players easily track and calculate scores in the Rummy card game. This app features an intuitive and user-friendly interface, reduces manual calculation errors, and includes game history storage to review player statistics and progress over time. With this app, players can focus on enjoying the game without the hassle of managing complicated scorekeeping.',
-          tags: ['Vue.js', 'JavaScript', 'Bootstrap', 'LocalStorage'],
+          detailedDescription: 'The Rummy Score Calculator App is a digital solution designed to help players easily track and calculate scores in the Rummy card game. This app features an intuitive and user-friendly interface, reduces manual calculation errors, and includes game history storage to review player statistics and progress over time. With this app, players can focus on enjoying the game without the hassle of managing complicated scorekeeping. This application is a live Rummy score counter application in the form of a link that can be accessed by anyone who wants to view live scores, using a realtime database and a friendly, modern UI.',
+          tags: ['Vue.js', 'JavaScript', 'Bootstrap', 'LocalStorage', 'Firebase', 'HTML', 'CSS'],
           category: 'utility',
           images: [
-            image1,
-            image2,
-            image3,
-            image4,
-            image5
+            remi1,
+            remi2,
+            remi3,
+            remi4,
+            remi5,
+            remi6,
+            remi7,
+            remi8
           ],
           demoLink: 'https://aplikasi-remi.netlify.app/',
           githubLink: '#'
