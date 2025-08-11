@@ -5,6 +5,7 @@ import AboutMe from '../views/AboutMe.vue'
 import Project from '../views/Projects.vue'
 import Gallery from '../views/Gallery.vue'
 import AboutUs from '../views/AboutUs.vue'
+import Experience from '../views/Experience.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/about-us',
     name: 'AboutUs',
     component: AboutUs
+  },
+  {
+    path: '/experience',
+    name: 'Experience',
+    component: Experience
   }
 ]
 
