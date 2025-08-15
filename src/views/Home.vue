@@ -2,7 +2,7 @@
   <div class="home py-5">
     <div class="jumbotron bg-dark p-5 rounded-3 text-white animate-in fade-in-down">
       <h1 class="display-4 slide-in-left">Welcome to My Portfolio</h1>
-      <p class="lead slide-in-right">I'm a passionate web developer specializing in Vue.js and modern front-end
+      <p class="lead slide-in-right">I'm a passionate frontend developer specializing in Vue.js and modern front-end
         technologies</p>
       <hr class="my-4 expand-hr">
       <p class="fade-in">Check out my projects and get in touch if you'd like to collaborate!</p>

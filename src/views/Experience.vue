@@ -5,7 +5,7 @@
     <div class="intro-section mb-5">
       <div class="intro-content">
         <h3 class="mb-4 text-white">Professional Journey</h3>
-        <p class="text-white">Throughout my career as a Front-End Developer, I have gained extensive experience in
+        <p class="text-white">Throughout my career as a Frontend Developer, I have gained extensive experience in
           building modern, responsive web applications using cutting-edge technologies. My journey has taken me through
           various roles and projects, each contributing to my growth as a developer and my expertise in Vue.js
           ecosystem.</p>
@@ -81,7 +81,7 @@
       <div class="cta-content">
         <h3 class="mb-4 text-white">Let's Work Together</h3>
         <p class="text-light">I'm always interested in new opportunities and challenging projects. If you're looking for
-          a dedicated Front-End Developer with expertise in Vue.js and modern web technologies, I'd love to hear from
+          a dedicated Frontend Developer with expertise in Vue.js and modern web technologies, I'd love to hear from
           you.</p>
         <div class="row mt-4">
           <div class="col-md-12 text-center">
@@ -102,7 +102,7 @@ export default {
     return {
       experiences: [
         {
-          position: 'Front-End Developer',
+          position: 'Frontend Developer',
           company: 'PT. Adi Data Informatika (Penempatan: Bank Indonesia)',
           duration: '07/2025 - Present',
           type: 'Contract',
@@ -119,10 +119,10 @@ export default {
             'Working closely with UI/UX designers to translate designs into functional and visually appealing interfaces',
             'Conducting code reviews to maintain code quality and consistency across the team'
           ],
-          skills: ['Vue.js', 'Vuex', 'Vue Router', 'JavaScript', 'REST API', 'Agile', 'Scrum', 'HTML/CSS']
+          skills: ['Vue.js', 'Vuetify', 'Vuex', 'Vue Router', 'JavaScript', 'REST API', 'Agile', 'Scrum', 'HTML/CSS']
         },
         {
-          position: 'Front-End Developer',
+          position: 'Frontend Developer',
           company: 'Experd Consultant',
           duration: '09/2022 - 07/2025',
           type: 'Full-time',
@@ -169,7 +169,7 @@ export default {
         {
           category: 'Frontend Development',
           icon: '💻',
-          skills: ['Vue.js', 'Vuex', 'Vue Router', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap']
+          skills: ['Vue.js', 'Vuetify', 'Vuex', 'Vue Router', 'JavaScript', 'HTML5', 'CSS', 'Bootstrap']
         },
         {
           category: 'Development Tools',
