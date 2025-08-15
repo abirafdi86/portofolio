@@ -3,7 +3,7 @@
     <div class="footer-content">
       <div class="footer-section brand">
         <h3 class="footer-title">Muhammad Abi Rafdi</h3>
-        <p class="footer-tagline">Web Developer</p>
+        <p class="footer-tagline">Frontend Developer</p>
         <div class="footer-polygon">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <polygon class="footer-shape" points="50,10 90,30 90,70 50,90 10,70 10,30" />
@@ -16,6 +16,7 @@
         <ul class="footer-links">
           <li><router-link to="/" @click.native="scrollToTop">Home</router-link></li>
           <li><router-link to="/about-me" @click.native="scrollToTop">About Me</router-link></li>
+          <li><router-link to="/experience" @click.native="scrollToTop">Experience</router-link></li>
           <li><router-link to="/project" @click.native="scrollToTop">Projects</router-link></li>
           <li><router-link to="/gallery" @click.native="scrollToTop">Gallery</router-link></li>
         </ul>
