@@ -1,321 +1,203 @@
 <template>
-  <div class="about-me py-5">
-    <h1 class="mb-4 text-white fade-in-down">About Me</h1>
-
-    <div class="row">
-      <div class="col-md-4 mb-4 text-center fade-in-left">
-        <div class="profile-img-container mb-3">
-          <div class="profile-img pulse-animation">
-            <img src="@/assets/images/1.jpg" alt="Muhammad Abi Rafdi" class="img-fluid profile-image-circle">
-          </div>
+  <section class="about-me py-5">
+    <div class="profile-layout">
+      <aside class="profile-card">
+        <img src="@/assets/images/1.jpg" alt="Muhammad Abi Rafdi" class="profile-image">
+        <h2>Muhammad Abi Rafdi</h2>
+        <p>Frontend Developer</p>
+        <div class="social-links">
+          <a href="https://github.com/abirafdi86" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/muhammad-abi-rafdi-3a84231b8" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <a href="mailto:abiamuba8622@gmail.com">Email</a>
         </div>
-        <h3 class="text-white fade-in">Muhammad Abi Rafdi</h3>
-        <p class="text-white fade-in">Frontend Developer</p>
-        <div class="social-links mt-3 fade-in-up">
-          <a href="#" class="btn btn-outline-light me-2 hover-effect"><i class="bi bi-github"></i></a>
-          <a href="#" class="btn btn-outline-light me-2 hover-effect"><i class="bi bi-linkedin"></i></a>
-          <a href="#" class="btn btn-outline-light hover-effect"><i class="bi bi-twitter"></i></a>
-        </div>
-      </div>
+      </aside>
 
-      <div class="col-md-8">
-        <div class="mb-4 fade-in-right">
-          <h3 class="text-white slide-in">My Story</h3>
-          <p class="text-white fade-in">Hello! I'm Abi, a passionate Frontend Developer with over 3 years of experience
-            in creating dynamic web
-            applications. My journey in web development began during my college years when I built my first website
-            using HTML and CSS.</p>
-          <p class="text-white fade-in delay-1">Since then, I've expanded my skills to include modern JavaScript
-            frameworks like Vue.js. I'm particularly
-            enthusiastic about building intuitive user interfaces and creating seamless user experiences.</p>
-          <p class="text-white fade-in delay-2">When I'm not coding, you can find me hiking in the mountains, reading
-            sci-fi novels, or experimenting
-            with new coffee brewing methods.</p>
-        </div>
+      <div class="about-content">
+        <p class="eyebrow">About me</p>
+        <h2>I build practical frontend experiences for real product workflows.</h2>
+        <p>
+          I am a frontend developer focused on Vue.js, responsive interfaces, dashboards,
+          and API-connected web applications. My recent work includes enterprise interfaces
+          for internal decision-support workflows and production web applications.
+        </p>
+        <p>
+          I care about clean component structure, predictable user flows, and UI details
+          that make daily work easier for users. I enjoy working closely with backend
+          developers and designers to turn requirements into usable screens.
+        </p>
 
-        <div class="fade-in-up delay-3">
-          <h3 class="text-white slide-in">Skills</h3>
-          <div class="row">
-            <div class="col-md-6">
-              <h5 class="text-white slide-in delay-1">Technical Skills</h5>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>HTML/CSS</span>
-                  <span>95%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-success progress-animate" role="progressbar" style="width: 0%"
-                    data-width="95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>JavaScript</span>
-                  <span>90%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-success progress-animate" role="progressbar" style="width: 0%"
-                    data-width="90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>Vue.js</span>
-                  <span>85%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-success progress-animate" role="progressbar" style="width: 0%"
-                    data-width="85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <h5 class="text-white slide-in delay-2">Additional Skills</h5>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>UI/UX Design</span>
-                  <span>80%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-info progress-animate" role="progressbar" style="width: 0%"
-                    data-width="80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>Responsive Design</span>
-                  <span>90%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-info progress-animate" role="progressbar" style="width: 0%"
-                    data-width="90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="mb-3 skill-item">
-                <div class="d-flex justify-content-between text-white">
-                  <span>Git/Version Control</span>
-                  <span>75%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-info progress-animate" role="progressbar" style="width: 0%"
-                    data-width="75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+        <div class="skill-section">
+          <h3>Technical focus</h3>
+          <div class="skill-groups">
+            <div v-for="group in skillGroups" :key="group.title" class="skill-group">
+              <h4>{{ group.title }}</h4>
+              <div class="skill-tags">
+                <span v-for="skill in group.skills" :key="skill">{{ skill }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
   name: 'AboutMe',
-  mounted() {
-    // Animate progress bars
-    setTimeout(() => {
-      const progressBars = document.querySelectorAll('.progress-animate');
-      progressBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        bar.style.width = width;
-      });
-    }, 500);
-
-    // Add staggered animation to skill items
-    const skillItems = document.querySelectorAll('.skill-item');
-    skillItems.forEach((item, index) => {
-      item.style.animationDelay = `${0.3 + (index * 0.15)}s`;
-    });
+  data() {
+    return {
+      skillGroups: [
+        {
+          title: 'Frontend',
+          skills: ['Vue.js 2 & 3', 'Vuex', 'JavaScript', 'TypeScript', 'HTML', 'CSS']
+        },
+        {
+          title: 'Frameworks & libraries',
+          skills: ['Vuetify', 'Bootstrap', 'Tailwind CSS', 'Node.js', 'Responsive Design']
+        },
+        {
+          title: 'Tools & libraries',
+          skills: ['REST API', 'Git', 'Postman', 'Swagger', 'Jira', 'Figma', 'Agile / Scrum']
+        }
+      ]
+    }
   }
 }
 </script>
 
 <style scoped>
-/* Base styles */
 .about-me {
-  color: white;
+  color: var(--primary-text);
 }
 
-.profile-img-placeholder {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
+.profile-layout {
+  align-items: start;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: 2rem;
 }
 
-/* Animation keyframes */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.profile-card,
+.skill-group {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
 }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.profile-card {
+  padding: 1.5rem;
+  text-align: center;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-  }
-
-  70% {
-    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Animation classes */
-.fade-in {
-  animation: fadeIn 0.8s ease-in-out forwards;
-  opacity: 0;
-}
-
-.fade-in-down {
-  animation: fadeInDown 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0;
-  animation-delay: 0.2s;
-}
-
-.fade-in-left {
-  animation: fadeInLeft 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-.fade-in-right {
-  animation: fadeInRight 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-.pulse-animation {
-  animation: pulseGlow 2s infinite;
-  transition: all 0.3s ease;
-}
-
-.slide-in {
-  animation: slideIn 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.delay-1 {
-  animation-delay: 0.3s;
-}
-
-.delay-2 {
-  animation-delay: 0.6s;
-}
-
-.delay-3 {
-  animation-delay: 0.9s;
-}
-
-/* Progress bar animation */
-.progress-bar {
-  transition: width 1.2s ease-in-out;
-}
-
-.skill-item {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-in-out forwards;
-}
-
-/* Hover effects */
-.hover-effect {
-  transition: all 0.3s ease;
-}
-
-.hover-effect:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-}
-
-.profile-img {
-  height: 200px;
-  width: 200px;
-  margin: 0 auto;
+.profile-image {
+  aspect-ratio: 1;
+  border: 4px solid var(--border-color);
   border-radius: 50%;
-  overflow: hidden;
-  transition: transform 0.5s ease;
-  position: relative;
-}
-
-.profile-img:hover {
-  transform: scale(1.05);
-}
-
-.profile-image-circle {
-  width: 100%;
-  height: 135%;
+  margin-bottom: 1.25rem;
   object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  object-position: center top;
+  width: min(220px, 75%);
+}
+
+.profile-card h2 {
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.profile-card p {
+  color: var(--muted-text);
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0.55rem 0.75rem;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.about-content h2 {
+  color: var(--primary-text);
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  line-height: 1.16;
+  margin-bottom: 0.85rem;
+}
+
+.about-content p {
+  color: var(--secondary-text);
+  font-size: 0.97rem;
+  line-height: 1.6;
+}
+
+.skill-section {
+  margin-top: 2rem;
+}
+
+.skill-section h3 {
+  color: var(--primary-text);
+  margin-bottom: 1rem;
+}
+
+.skill-groups {
+  display: grid;
+  gap: 1rem;
+}
+
+.skill-group {
+  padding: 1.15rem;
+}
+
+.skill-group h4 {
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tags span {
+  background: var(--surface-soft);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--secondary-text);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.55rem;
+}
+
+@media (max-width: 850px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

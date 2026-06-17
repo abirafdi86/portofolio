@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import AboutMe from '../views/AboutMe.vue'
 import Project from '../views/Projects.vue'
+import ProjectDetail from '../views/ProjectDetail.vue'
 import Gallery from '../views/Gallery.vue'
-import AboutUs from '../views/AboutUs.vue'
 import Experience from '../views/Experience.vue'
 
 const routes = [
@@ -24,14 +24,14 @@ const routes = [
     component: Project
   },
   {
+    path: '/project/:slug',
+    name: 'ProjectDetail',
+    component: ProjectDetail
+  },
+  {
     path: '/gallery',
     name: 'Gallery',
     component: Gallery
-  },
-  {
-    path: '/about-us',
-    name: 'AboutUs',
-    component: AboutUs
   },
   {
     path: '/experience',
@@ -42,7 +42,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

@@ -1,140 +1,77 @@
 <template>
-  <div class="gallery py-5">
-    <!-- Loading Animation Overlay -->
-    <div class="loading-overlay" ref="loadingOverlay">
-      <div class="loading-content">
-        <div class="loading-logo">
-          <svg class="loading-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <polygon class="loading-polygon" points="50,10 90,30 90,70 50,90 10,70 10,30" fill="none" stroke="#64ffda"
-              stroke-width="4" />
-            <text x="50" y="55" text-anchor="middle" fill="#64ffda" font-size="12">GALLERY</text>
-          </svg>
-        </div>
-        <div class="loading-bar">
-          <div class="loading-progress" ref="loadingProgress"></div>
-        </div>
-      </div>
+  <section class="gallery py-5">
+    <div class="page-heading">
+      <p class="eyebrow">Gallery</p>
+      <h2 class="page-title">A small personal layer</h2>
+      <p>
+        A curated set of travel and personal photos. This page is intentionally
+        lighter so the portfolio keeps its focus on projects and experience.
+      </p>
     </div>
 
-    <h1 class="mb-4 page-title" style="color: white;">Photo Gallery</h1>
-
-    <div class="d-flex mb-4 filter-container">
-      <div class="btn-group">
-        <button class="btn" :class="filter === 'all' ? 'btn-primary' : 'btn-outline-primary'" @click="setFilter('all')">
-          All
-        </button>
-        <button class="btn" :class="filter === 'me' ? 'btn-primary' : 'btn-outline-primary'" @click="setFilter('me')">
-          Me
-        </button>
-        <button class="btn" :class="filter === 'view' ? 'btn-primary' : 'btn-outline-primary'"
-          @click="setFilter('view')">
-          Travel Views
-        </button>
-      </div>
+    <div class="filter-bar">
+      <button
+        v-for="option in filters"
+        :key="option.value"
+        type="button"
+        class="filter-button"
+        :class="{ active: filter === option.value }"
+        @click="setFilter(option.value)"
+      >
+        {{ option.label }}
+      </button>
     </div>
 
-    <div class="gallery-grid" ref="gallery">
-      <div v-for="(photo, index) in filteredPhotos" :key="index" class="gallery-item"
-        :style="{ transitionDelay: `${index * 0.05}s` }" @click="openGalleryView(index)">
-        <div class="photo-card">
-          <div class="photo-wrapper">
-            <img :src="photo.src" :alt="photo.title" class="gallery-img">
-            <div class="photo-overlay">
-              <div class="photo-info">
-                <h5>{{ photo.title }}</h5>
-                <span class="photo-category">{{ photo.category }}</span>
-              </div>
-              <div class="view-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="16"></line>
-                  <line x1="8" y1="12" x2="16" y2="12"></line>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="gallery-grid">
+      <button
+        v-for="(photo, index) in filteredPhotos"
+        :key="photo.title"
+        type="button"
+        class="photo-card"
+        @click="openGalleryView(index)"
+      >
+        <img :src="photo.src" :alt="photo.title" loading="lazy">
+        <span>{{ photo.title }}</span>
+      </button>
     </div>
 
-    <!-- Gallery View -->
-    <div class="gallery-view" v-if="galleryViewOpen" @click="closeGalleryView">
+    <div v-if="galleryViewOpen" class="gallery-view" @click="closeGalleryView">
       <div class="gallery-view-content" @click.stop>
-        <button class="gallery-close-btn" @click="closeGalleryView">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+        <button class="close-button" type="button" aria-label="Close gallery" @click="closeGalleryView">
+          X
         </button>
 
-        <div class="gallery-navigation">
-          <button class="gallery-nav-btn prev" @click.stop="prevPhoto" :disabled="currentPhotoIndex === 0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
+        <div class="viewer-main">
+          <button type="button" class="nav-button" :disabled="currentPhotoIndex === 0" @click="prevPhoto">
+            Prev
           </button>
-
-          <div class="gallery-main-image">
-            <img :src="currentPhoto.src" :alt="currentPhoto.title" class="main-img">
-          </div>
-
-          <button class="gallery-nav-btn next" @click.stop="nextPhoto"
-            :disabled="currentPhotoIndex >= filteredPhotos.length - 1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
+          <img :src="currentPhoto.src" :alt="currentPhoto.title">
+          <button
+            type="button"
+            class="nav-button"
+            :disabled="currentPhotoIndex >= filteredPhotos.length - 1"
+            @click="nextPhoto"
+          >
+            Next
           </button>
         </div>
 
-        <div class="gallery-details">
-          <h3 class="gallery-photo-title">{{ currentPhoto.title }}</h3>
-          <p class="gallery-photo-description">{{ currentPhoto.description }}</p>
-          <span class="gallery-photo-category">{{ currentPhoto.category === 'me' ? 'Personal' : 'Travel Photography'
-          }}</span>
-        </div>
-
-        <!-- Thumbnails Navigation -->
-        <div class="gallery-thumbnails">
-          <div class="thumbnails-container">
-            <div v-for="(photo, index) in filteredPhotos" :key="index"
-              :class="['thumbnail-item', { active: index === currentPhotoIndex }]" @click.stop="setPhoto(index)">
-              <img :src="photo.src" :alt="photo.title" class="thumbnail-img">
-            </div>
-          </div>
+        <div class="viewer-details">
+          <h2>{{ currentPhoto.title }}</h2>
+          <p>{{ currentPhoto.description }}</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
-// Import travel images
-import travel1 from '@/assets/travel/travel1.jpg'
-import travel2 from '@/assets/travel/travel2.jpg'
 import travel3 from '@/assets/travel/travel3.jpg'
-import travel4 from '@/assets/travel/travel4.jpg'
 import travel5 from '@/assets/travel/travel5.jpg'
-import travel6 from '@/assets/travel/travel6.jpg'
-import travel7 from '@/assets/travel/travel7.jpg'
-import travel8 from '@/assets/travel/travel8.jpg'
-import travel9 from '@/assets/travel/travel9.jpg'
-import travel10 from '@/assets/travel/travel10.jpg'
-import travel11 from '@/assets/travel/travel11.jpg'
-import travel12 from '@/assets/travel/travel12.jpg'
-import travel13 from '@/assets/travel/travel13.jpg'
 import travel14 from '@/assets/travel/travel14.jpg'
 import travel15 from '@/assets/travel/travel15.jpg'
-
-// Import personal images
 import me1 from '@/assets/me/me1.jpg'
-import me2 from '@/assets/me/me2.jpg'
 import me3 from '@/assets/me/me3.jpg'
-import me4 from '@/assets/me/me4.jpg'
-import me5 from '@/assets/me/me5.jpg'
 import me7 from '@/assets/me/me7.jpg'
 import me8 from '@/assets/me/me8.jpg'
 
@@ -145,140 +82,57 @@ export default {
       filter: 'all',
       galleryViewOpen: false,
       currentPhotoIndex: 0,
-      isLoading: true,
+      filters: [
+        { label: 'All', value: 'all' },
+        { label: 'Personal', value: 'me' },
+        { label: 'Travel', value: 'view' }
+      ],
       photos: [
-        // Travel/View Photos
-        {
-          title: 'Ferry Approaching Kobe Harbor',
-          description: 'A passenger ferry navigates the blue waters of Kobe Harbor on a clear day, with the distinctive architecture of the port visible in the background.',
-          category: 'view',
-          src: travel10
-        },
-        {
-          title: 'Urban Shopping Center',
-          description: 'A modern shopping complex featuring a large white facade with the "umie" logo visible, showcasing contemporary Japanese architectural design.',
-          category: 'view',
-          src: travel11
-        },
-        {
-          title: 'Bustling Chinatown Market Street',
-          description: 'A vibrant, crowded street in Chinatown decorated with red traditional banners and lanterns overhead, filled with visitors exploring the cultural district.',
-          category: 'view',
-          src: travel12
-        },
-        {
-          title: 'Elevated Shopping District Walkway',
-          description: 'An elevated pedestrian walkway connecting large department stores in a major Japanese city, with urban infrastructure and modern buildings visible.',
-          category: 'view',
-          src: travel13
-        },
-        {
-          title: 'Tsutenkaku Tower at Night',
-          description: 'The iconic Tsutenkaku Tower illuminated with vibrant blue lighting against the night sky, showcasing its distinctive architectural features.',
-          category: 'view',
-          src: travel14
-        },
-        {
-          title: 'Canton Tower with Rainbow Illumination',
-          description: 'A spectacular night view of the Canton Tower with its distinctive shape brilliantly illuminated in rainbow colors against the dark city skyline.',
-          category: 'view',
-          src: travel15
-        },
-        {
-          title: 'View from Airplane Window',
-          description: 'A serene view from an airplane window showing the aircraft\'s wing against a golden sunset sky with clouds visible below.',
-          category: 'view',
-          src: travel1
-        },
-        {
-          title: 'Modern Transportation Infrastructure',
-          description: 'An architectural photograph showing Japan\'s modern transportation facilities with clean, minimalist design against a clear blue sky.',
-          category: 'view',
-          src: travel2
-        },
         {
           title: 'Traditional Japanese Shrine',
-          description: 'A beautiful traditional Japanese shrine structure displaying numerous white paper lanterns with Japanese calligraphy written on them.',
+          description: 'A quiet architectural detail from a traditional shrine visit.',
           category: 'view',
           src: travel3
         },
         {
-          title: 'Lawson Convenience Store',
-          description: 'A modern Lawson convenience store building with minimalist design situated in a park or recreational area surrounded by trees.',
-          category: 'view',
-          src: travel4
-        },
-        {
           title: 'Castle Moat and Stone Walls',
-          description: 'The impressive stone walls and moat of a traditional Japanese castle, showcasing the skilled stonework of the defensive walls.',
+          description: 'A strong visual memory from a historic Japanese castle area.',
           category: 'view',
           src: travel5
         },
         {
-          title: 'Geometric Glass Ceiling',
-          description: 'An artistic view looking up at a geometric triangular glass ceiling structure in a modern museum or cultural center in Japan.',
+          title: 'Tsutenkaku Tower at Night',
+          description: 'Night city lights and a distinct urban landmark.',
           category: 'view',
-          src: travel6
+          src: travel14
         },
         {
-          title: 'Historical Marker',
-          description: 'A memorial plaque or historical marker embedded in stonework, containing Japanese text about the site\'s historical significance.',
+          title: 'Canton Tower Illumination',
+          description: 'A bright city skyline moment from travel photography.',
           category: 'view',
-          src: travel7
+          src: travel15
         },
         {
-          title: 'Urban Shopping District',
-          description: 'A street-level view of a commercial district featuring the distinctive glass facade of a shopping mall against a blue sky.',
-          category: 'view',
-          src: travel8
-        },
-        {
-          title: 'Modern Shopping Atrium',
-          description: 'The interior of a contemporary shopping center with a dramatic glass roof, showing multiple levels of retail spaces and colorful design elements.',
-          category: 'view',
-          src: travel9
-        },
-
-        // Me Photos - Now with imported paths
-        {
-          title: 'Personal Photo 1',
-          description: 'Personal photograph',
+          title: 'Portrait 1',
+          description: 'Personal portrait selected for the gallery.',
           category: 'me',
           src: me1
         },
         {
-          title: 'Personal Photo 2',
-          description: 'Personal photograph',
-          category: 'me',
-          src: me2
-        },
-        {
-          title: 'Personal Photo 3',
-          description: 'Personal photograph',
+          title: 'Portrait 2',
+          description: 'Personal portrait selected for the gallery.',
           category: 'me',
           src: me3
         },
         {
-          title: 'Personal Photo 4',
-          description: 'Personal photograph',
-          category: 'me',
-          src: me4
-        },
-        {
-          title: 'Personal Photo 5',
-          description: 'Personal photograph',
-          category: 'me',
-          src: me5
-        },
-        {
-          title: 'Personal Photo 7',
-          description: 'Personal photograph',
+          title: 'Portrait 3',
+          description: 'Personal portrait selected for the gallery.',
           category: 'me',
           src: me7
         },
         {
-          title: 'Personal Photo 8',
-          description: 'Personal photograph',
+          title: 'Portrait 4',
+          description: 'Personal portrait selected for the gallery.',
           category: 'me',
           src: me8
         }
@@ -287,652 +141,217 @@ export default {
   },
   computed: {
     filteredPhotos() {
-      if (this.filter === 'all') {
-        return this.photos
-      }
+      if (this.filter === 'all') return this.photos
       return this.photos.filter(photo => photo.category === this.filter)
     },
     currentPhoto() {
-      return this.filteredPhotos[this.currentPhotoIndex] || this.photos[0]
+      return this.filteredPhotos[this.currentPhotoIndex] || this.filteredPhotos[0]
     }
+  },
+  mounted() {
+    window.addEventListener('keydown', this.handleKeydown)
+  },
+  beforeUnmount() {
+    window.removeEventListener('keydown', this.handleKeydown)
+    document.body.style.overflow = ''
   },
   methods: {
     setFilter(filter) {
       this.filter = filter
       this.galleryViewOpen = false
-
-      // Reset any scroll position
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-
-      // Add a slight delay to allow animations to complete
-      setTimeout(() => {
-        this.animateGalleryItems()
-      }, 300)
+      this.currentPhotoIndex = 0
+      document.body.style.overflow = ''
     },
     openGalleryView(index) {
       this.currentPhotoIndex = index
       this.galleryViewOpen = true
-      document.body.style.overflow = 'hidden' // Prevent background scrolling
+      document.body.style.overflow = 'hidden'
     },
     closeGalleryView() {
       this.galleryViewOpen = false
-      document.body.style.overflow = '' // Restore scrolling
+      document.body.style.overflow = ''
     },
     nextPhoto() {
       if (this.currentPhotoIndex < this.filteredPhotos.length - 1) {
-        this.currentPhotoIndex++
+        this.currentPhotoIndex += 1
       }
     },
     prevPhoto() {
       if (this.currentPhotoIndex > 0) {
-        this.currentPhotoIndex--
+        this.currentPhotoIndex -= 1
       }
     },
-    setPhoto(index) {
-      this.currentPhotoIndex = index
-    },
-    simulateLoading() {
-      const loadingOverlay = this.$refs.loadingOverlay
-      const loadingProgress = this.$refs.loadingProgress
-
-      if (!loadingOverlay || !loadingProgress) return
-
-      // Animate the progress bar
-      let progress = 0
-      const interval = setInterval(() => {
-        if (progress >= 100) {
-          clearInterval(interval)
-
-          // Add exit animation class
-          loadingOverlay.classList.add('loading-overlay-exit')
-
-          // Remove the overlay after animation completes
-          setTimeout(() => {
-            loadingOverlay.style.display = 'none'
-            this.animateContent()
-          }, 800)
-        } else {
-          progress += Math.random() * 15
-          progress = Math.min(progress, 100)
-          loadingProgress.style.width = `${progress}%`
-        }
-      }, 200)
-    },
-    animateContent() {
-      // Trigger animations for main content
-      const pageTitle = document.querySelector('.page-title')
-      const filterContainer = document.querySelector('.filter-container')
-
-      if (pageTitle) pageTitle.classList.add('show')
-      if (filterContainer) filterContainer.classList.add('show')
-
-      // Animate gallery items with a delay
-      setTimeout(() => {
-        this.animateGalleryItems()
-      }, 400)
-    },
-    animateGalleryItems() {
-      const galleryItems = document.querySelectorAll('.gallery-item')
-      galleryItems.forEach((item, index) => {
-        setTimeout(() => {
-          item.classList.add('show')
-        }, 50 * index)
-      })
+    handleKeydown(event) {
+      if (!this.galleryViewOpen) return
+      if (event.key === 'Escape') this.closeGalleryView()
+      if (event.key === 'ArrowRight') this.nextPhoto()
+      if (event.key === 'ArrowLeft') this.prevPhoto()
     }
-  },
-  mounted() {
-    // Initialize the component
-    this.$nextTick(() => {
-      // Start loading simulation
-      this.simulateLoading()
-
-      // Listen for escape key to close gallery view
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.galleryViewOpen) {
-          this.closeGalleryView()
-        } else if (e.key === 'ArrowRight' && this.galleryViewOpen) {
-          this.nextPhoto()
-        } else if (e.key === 'ArrowLeft' && this.galleryViewOpen) {
-          this.prevPhoto()
-        }
-      })
-    })
-  },
-  beforeUnmount() {
-    // Clean up event listeners
-    window.removeEventListener('keydown', this.handleKeydown)
-    document.body.style.overflow = '' // Ensure scrolling is restored
   }
 }
 </script>
 
 <style scoped>
-/* Loading Animation */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0c0c0c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.8s ease;
+.gallery {
+  color: var(--primary-text);
 }
 
-.loading-overlay-exit {
-  opacity: 0;
+.page-heading {
+  max-width: 820px;
+  margin-bottom: 2rem;
 }
 
-.loading-content {
-  text-align: center;
-}
-
-.loading-logo {
-  margin-bottom: 30px;
-}
-
-.loading-svg {
-  width: 100px;
-  height: 100px;
-}
-
-.loading-polygon {
-  animation: rotate 3s infinite linear, pulse 2s infinite ease-in-out;
-}
-
-@keyframes rotate {
-  from {
-    transform-origin: center;
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform-origin: center;
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    stroke-width: 2;
-  }
-
-  50% {
-    stroke-width: 6;
-  }
-
-  100% {
-    stroke-width: 2;
-  }
-}
-
-.loading-bar {
-  width: 200px;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.loading-progress {
-  height: 100%;
-  width: 0;
-  background-color: #64ffda;
-  transition: width 0.3s ease;
-}
-
-/* Page Content Animations */
-.page-title {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.page-title.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.filter-container {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-}
-
-.filter-container.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Filter buttons styling */
-.btn-group .btn {
-  padding: 8px 16px;
-  margin: 0 3px;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background-color: #64ffda;
-  border-color: #64ffda;
-  color: #131b22;
-}
-
-.btn-outline-primary {
-  color: #64ffda;
-  border-color: #64ffda;
-}
-
-.btn-outline-primary:hover {
-  background-color: rgba(100, 255, 218, 0.1);
-  color: #64ffda;
-}
-
-/* Gallery Grid */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.gallery-item {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  position: relative;
-}
-
-.gallery-item.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.photo-card {
-  background-color: #1a242f;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  height: 100%;
-}
-
-.photo-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.photo-wrapper {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-}
-
-.gallery-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.photo-card:hover .gallery-img {
-  transform: scale(1.1);
-}
-
-.photo-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(19, 27, 34, 0.9), transparent);
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  transition: opacity 0.3s ease;
-}
-
-.photo-card:hover .photo-overlay {
-  opacity: 1;
-}
-
-.photo-info {
-  color: white;
-  transform: translateY(20px);
-  transition: transform 0.3s ease 0.1s;
-}
-
-.photo-card:hover .photo-info {
-  transform: translateY(0);
-}
-
-.photo-info h5 {
-  margin: 0;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #64ffda;
-}
-
-.photo-category {
+.eyebrow {
+  color: var(--accent);
   font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #ccd6f6;
-  opacity: 0.8;
 }
 
-.view-icon {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(100, 255, 218, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(0);
-  transition: transform 0.3s ease;
+.page-title {
+  color: var(--primary-text);
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  margin-bottom: 0.75rem;
 }
 
-.view-icon svg {
-  stroke: #64ffda;
-}
-
-.photo-card:hover .view-icon {
-  transform: scale(1);
-}
-
-/* Gallery View */
-.gallery-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(10, 25, 47, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  opacity: 0;
-  animation: fadeIn 0.3s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.gallery-view-content {
-  position: relative;
-  width: 90%;
-  max-width: 1200px;
-  max-height: 90vh;
-  background-color: #131b22;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transform: scale(0.95);
-  animation: scaleIn 0.3s ease forwards;
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.95);
-  }
-
-  to {
-    transform: scale(1);
-  }
-}
-
-.gallery-close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(100, 255, 218, 0.1);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-
-.gallery-close-btn:hover {
-  background-color: rgba(100, 255, 218, 0.2);
-}
-
-.gallery-close-btn svg {
-  stroke: #64ffda;
-}
-
-.gallery-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  position: relative;
-}
-
-.gallery-nav-btn {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(100, 255, 218, 0.1);
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-
-.gallery-nav-btn:hover:not(:disabled) {
-  background-color: rgba(100, 255, 218, 0.2);
-}
-
-.gallery-nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.gallery-nav-btn svg {
-  stroke: #64ffda;
-}
-
-.gallery-main-image {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60vh;
-  max-height: 500px;
-  margin: 0 20px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.main-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-details {
-  margin-top: 20px;
-  text-align: center;
-  padding: 0 40px;
-}
-
-.gallery-photo-title {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #64ffda;
-  margin-bottom: 10px;
-}
-
-.gallery-photo-description {
-  color: #ccd6f6;
-  margin-bottom: 10px;
+.page-heading p,
+.viewer-details p {
+  color: var(--muted-text);
+  font-size: 0.96rem;
   line-height: 1.6;
 }
 
-.gallery-photo-category {
-  font-size: 0.85rem;
-  color: #8892b0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Thumbnails */
-.gallery-thumbnails {
-  margin-top: 20px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
-
-.gallery-thumbnails::-webkit-scrollbar {
-  height: 6px;
-}
-
-.gallery-thumbnails::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.gallery-thumbnails::-webkit-scrollbar-thumb {
-  background: rgba(100, 255, 218, 0.3);
-  border-radius: 10px;
-}
-
-.thumbnails-container {
+.filter-bar {
   display: flex;
-  gap: 10px;
-  padding: 5px 0;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
-.thumbnail-item {
-  width: 80px;
-  height: 60px;
-  border-radius: 5px;
+.filter-button,
+.nav-button {
+  border: 1px solid var(--border-color);
+  background: var(--surface-soft);
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+}
+
+.filter-button.active,
+.filter-button:hover,
+.nav-button:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.photo-card {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--primary-text);
   overflow: hidden;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  flex-shrink: 0;
+  padding: 0;
+  text-align: left;
 }
 
-.thumbnail-item:hover {
-  opacity: 0.8;
-}
-
-.thumbnail-item.active {
-  opacity: 1;
-  border-color: #64ffda;
-}
-
-.thumbnail-img {
-  width: 100%;
-  height: 100%;
+.photo-card img {
+  aspect-ratio: 4 / 3;
+  display: block;
   object-fit: cover;
+  width: 100%;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-
-  .gallery-view-content {
-    width: 95%;
-    padding: 10px;
-  }
-
-  .gallery-main-image {
-    height: 40vh;
-  }
-
-  .gallery-details {
-    padding: 0 20px;
-  }
-
-  .gallery-photo-title {
-    font-size: 1.2rem;
-  }
-
-  .gallery-photo-description {
-    font-size: 0.9rem;
-  }
+.photo-card span {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.85rem;
 }
 
-@media (max-width: 576px) {
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+.photo-card:hover {
+  transform: translateY(-4px);
+}
+
+.gallery-view {
+  align-items: center;
+  background: rgba(10, 25, 47, 0.88);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 1rem;
+  position: fixed;
+  z-index: 2000;
+}
+
+.gallery-view-content {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  max-height: 92vh;
+  max-width: 1100px;
+  overflow: auto;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.close-button {
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+  color: var(--accent-contrast);
+  font-weight: 800;
+  height: 38px;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 38px;
+  z-index: 2;
+}
+
+.viewer-main {
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.viewer-main img {
+  background: var(--surface-soft);
+  border-radius: 8px;
+  max-height: 62vh;
+  object-fit: contain;
+  width: 100%;
+}
+
+.viewer-details {
+  margin: 1rem auto 0;
+  max-width: 760px;
+  text-align: center;
+}
+
+.viewer-details h2 {
+  color: var(--accent);
+  font-size: 1.15rem;
+}
+
+@media (max-width: 700px) {
+  .viewer-main {
+    grid-template-columns: 1fr;
   }
 
-  .photo-info h5 {
-    font-size: 0.9rem;
-  }
-
-  .photo-category {
-    font-size: 0.7rem;
-  }
-
-  .gallery-navigation {
-    flex-direction: column;
-  }
-
-  .gallery-main-image {
-    margin: 10px 0;
-    height: 30vh;
-  }
-
-  .gallery-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .gallery-nav-btn.prev {
-    left: 5px;
-  }
-
-  .gallery-nav-btn.next {
-    right: 5px;
-  }
-
-  .thumbnail-item {
-    width: 60px;
-    height: 45px;
+  .nav-button {
+    width: 100%;
   }
 }
 </style>

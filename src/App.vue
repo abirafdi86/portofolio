@@ -1,38 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" :data-theme="theme">
     <!-- Tambahkan komponen background di sini -->
     <tech-background />
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <router-link class="navbar-brand" to="/">Portfolio</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/about-me">About Me</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/experience">Experience</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/project">Projects</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/gallery">Gallery</router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar :theme="theme" @toggle-theme="toggleTheme" @open-command-palette="openCommandPalette" />
 
     <div class="container mt-4">
-      <router-view />
+      <router-view v-slot="{ Component, route }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" :key="route.fullPath" />
+        </transition>
+      </router-view>
     </div>
 
     <!-- WhatsApp Button -->
@@ -59,47 +37,92 @@
     </div>
 
     <Footer />
+    <CommandPalette :open="commandPaletteOpen" @close="closeCommandPalette" />
   </div>
 </template>
 
 <script>
+import CommandPalette from './components/CommandPalette.vue'
 import Footer from './components/Footer.vue'
+import Navbar from './components/Navbar.vue'
 import TechBackground from './components/TechBackground.vue'
 
 export default {
   name: 'App',
   components: {
+    CommandPalette,
     Footer,
+    Navbar,
     TechBackground
   },
   data() {
     return {
+      commandPaletteOpen: false,
+      theme: 'dark',
       showScrollTop: false
     }
   },
   mounted() {
+    const savedTheme = localStorage.getItem('portfolio-theme')
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      this.theme = savedTheme
+    }
     window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('keydown', this.handleKeydown)
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('keydown', this.handleKeydown)
   },
   methods: {
+    closeCommandPalette() {
+      this.commandPaletteOpen = false
+    },
     handleScroll() {
       // Show button when user scrolls down 200px from the top
       this.showScrollTop = window.scrollY > 200
+    },
+    handleKeydown(event) {
+      const isCommandShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k'
+      if (isCommandShortcut) {
+        event.preventDefault()
+        this.openCommandPalette()
+      }
+
+      if (event.key === 'Escape') {
+        this.closeCommandPalette()
+      }
+    },
+    openCommandPalette() {
+      this.commandPaletteOpen = true
     },
     scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
+    },
+    toggleTheme() {
+      this.theme = this.theme === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('portfolio-theme', this.theme)
     }
   }
 }
 </script>
 
 <style>
-@import 'bootstrap/dist/css/bootstrap.min.css';
+:root {
+  --accent: #64ffda;
+  --accent-contrast: #10202b;
+  --app-bg: #131b22;
+  --body-bg: #0a192f;
+  --border-color: rgba(100, 255, 218, 0.16);
+  --muted-text: #a8b2d1;
+  --primary-text: #e6f1ff;
+  --secondary-text: #cbd5f5;
+  --surface-soft: rgba(100, 255, 218, 0.08);
+  --surface-strong: rgba(26, 36, 47, 0.96);
+}
 
 body,
 html {
@@ -107,17 +130,35 @@ html {
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
-  background-color: #0a192f;
-  color: #e6f1ff;
+  background-color: var(--body-bg);
+  color: var(--primary-text);
 }
 
 #app {
-  background-color: #131b22;
+  background-color: var(--app-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#app[data-theme='light'] {
+  --accent: #006b5f;
+  --accent-contrast: #ffffff;
+  --app-bg: #f5f7fb;
+  --body-bg: #e9eef6;
+  --border-color: rgba(15, 23, 42, 0.13);
+  --muted-text: #5b6474;
+  --primary-text: #172033;
+  --secondary-text: #334155;
+  --surface-soft: rgba(15, 23, 42, 0.05);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+}
+
+#app[data-theme='light'] .tech-background {
+  opacity: 0.08;
 }
 
 footer {
@@ -220,30 +261,61 @@ footer {
   height: 100%;
 }
 
-/* Navbar styling tweaks */
-.navbar {
-  background-color: rgba(13, 17, 23, 0.9) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 10;
-}
-
-.navbar-brand {
-  color: #64ffda !important;
-  font-weight: bold;
-}
-
-.nav-link {
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #64ffda !important;
-}
-
 .container {
   position: relative;
   z-index: 5;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+a,
+button {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a:hover,
+button:hover {
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 16%, transparent);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+  }
 }
 </style>

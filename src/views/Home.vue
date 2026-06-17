@@ -1,382 +1,566 @@
 <template>
-  <div class="home py-5">
-    <div class="jumbotron bg-dark p-5 rounded-3 text-white animate-in fade-in-down">
-      <h1 class="display-4 slide-in-left">Welcome to My Portfolio</h1>
-      <p class="lead slide-in-right">I'm a passionate frontend developer specializing in Vue.js and modern front-end
-        technologies</p>
-      <hr class="my-4 expand-hr">
-      <p class="fade-in">Check out my projects and get in touch if you'd like to collaborate!</p>
-      <router-link to="/project" class="btn btn-primary btn-lg pulse-btn">
-        <span class="btn-text-wrapper">View Projects</span>
-      </router-link>
-    </div>
+  <main class="home py-5">
+    <section class="hero" v-reveal>
+      <div class="hero-copy">
+        <p class="eyebrow">Frontend Developer</p>
+        <h2 class="main-name">Muhammad Abi Rafdi</h2>
+        <p class="hero-lead">
+          I build responsive Vue.js applications, dashboard interfaces, and
+          API-connected workflows for teams that need reliable web products.
+        </p>
 
-    <div class="row mt-5 text-white">
-      <div class="col-md-4 mb-4 service-card">
-        <div class="service-icon">
-          <i class="bi bi-code-slash"></i>
+        <div class="hero-actions">
+          <router-link to="/project" class="primary-action"
+            >View projects</router-link
+          >
+          <a
+            href="/CV_Abi.pdf"
+            class="secondary-action"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download CV
+          </a>
         </div>
-        <h5 class="service-title">Web Development</h5>
-        <p>Creating responsive and dynamic web applications using modern frameworks and technologies.</p>
       </div>
-      <div class="col-md-4 mb-4 service-card">
-        <div class="service-icon">
-          <i class="bi bi-brush"></i>
-        </div>
-        <h5 class="service-title">UI/UX Design</h5>
-        <p>Designing intuitive and engaging user interfaces with a focus on user experience.</p>
-      </div>
-      <div class="col-md-4 mb-4 service-card">
-        <div class="service-icon">
-          <i class="bi bi-bug"></i>
-        </div>
-        <h5 class="service-title">Fix & Bugs</h5>
-        <p>Identifying, tracking, and resolving software bugs to ensure optimal performance, stability, and user
-          experience across all platforms.</p>
-      </div>
-    </div>
 
-    <div class="text-center mt-5 text-white fade-in-up">
-      <h2 class="glow-text">Let's Create Something Amazing Together</h2>
-      <p class="lead fade-in">Have a project in mind? Get in touch and let's discuss how we can collaborate.</p>
-      <a href="mailto:abiamuba8622@gmail.com" class="btn btn-outline-light floating-btn">
-        Contact Me
-        <i class="bi bi-arrow-right ms-2 btn-icon"></i>
-      </a>
-    </div>
-  </div>
+      <div class="hero-panel" aria-label="Professional highlights">
+        <div>
+          <span class="metric">3+</span>
+          <p>Years building frontend applications</p>
+        </div>
+        <div>
+          <span class="metric">Vue.js</span>
+          <p>Main framework for production work</p>
+        </div>
+        <div>
+          <span class="metric">BI</span>
+          <p>Enterprise dashboard and workflow experience</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="focus-grid" aria-label="Core capabilities">
+      <article v-for="(item, index) in focusAreas" :key="item.title" class="focus-card" v-reveal="`${index * 0.08}s`">
+        <span class="focus-index">{{ item.index }}</span>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+      </article>
+    </section>
+
+    <UiPlayground />
+
+    <section class="architecture-section" v-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">How I build</p>
+        <h2>Frontend architecture habits I bring into projects</h2>
+      </div>
+      <div class="architecture-grid">
+        <article v-for="(item, index) in architectureItems" :key="item.title" class="architecture-card" v-reveal="`${index * 0.06}s`">
+          <span>{{ item.index }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="tech-section" v-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">Tech stack</p>
+        <h2>Tools I use to build frontend products</h2>
+      </div>
+      <div class="tech-grid">
+        <article v-for="(tech, index) in techStack" :key="tech.name" class="tech-card" v-reveal="`${index * 0.05}s`">
+          <span>{{ tech.short }}</span>
+          <div>
+            <h3>{{ tech.name }}</h3>
+            <p>{{ tech.description }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact-strip" v-reveal>
+      <div>
+        <h2>Available for frontend collaboration</h2>
+        <p>
+          I am interested in Vue.js projects, dashboard products, internal
+          tools, and API-driven web applications.
+        </p>
+      </div>
+      <a href="mailto:abiamuba8622@gmail.com">Contact me</a>
+    </section>
+
+    <section class="contact-form-section" v-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">Contact</p>
+        <h2>Start a project conversation</h2>
+      </div>
+      <form class="contact-form" @submit.prevent="submitContact">
+        <label>
+          Name
+          <input v-model.trim="contact.name" type="text" name="name" required placeholder="Your name">
+        </label>
+        <label>
+          Email
+          <input v-model.trim="contact.email" type="email" name="email" required placeholder="your@email.com">
+        </label>
+        <label class="full">
+          Message
+          <textarea v-model.trim="contact.message" name="message" rows="5" required placeholder="Tell me about your frontend needs"></textarea>
+        </label>
+        <button type="submit">Send via email</button>
+      </form>
+    </section>
+  </main>
 </template>
 
 <script>
-export default {
-  name: 'Home',
-  mounted() {
-    // Animation for service cards with staggered delay
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach((card, index) => {
-      card.style.animationDelay = `${0.3 + (index * 0.2)}s`;
-      card.classList.add('fade-in-up');
-    });
+import UiPlayground from '@/components/UiPlayground.vue'
 
-    // Intersection Observer for scroll animations
-    this.setupScrollAnimations();
+export default {
+  name: "Home",
+  components: {
+    UiPlayground,
+  },
+  data() {
+    return {
+      focusAreas: [
+        {
+          index: "01",
+          title: "Vue.js interfaces",
+          description:
+            "Building reusable components, routing flows, state-driven screens, and responsive layouts.",
+        },
+        {
+          index: "02",
+          title: "Dashboard products",
+          description:
+            "Turning complex business information into clear pages, tables, forms, and decision-support views.",
+        },
+        {
+          index: "03",
+          title: "API integration",
+          description:
+            "Connecting frontends with REST APIs, handling CRUD flows, and keeping interactions predictable.",
+        },
+      ],
+      techStack: [
+        {
+          short: "VUE",
+          name: "Vue.js 2 & 3",
+          description: "Vue ecosystem, component-driven UI, routing flows, and maintainable frontend modules.",
+        },
+        {
+          short: "TS",
+          name: "JavaScript & TypeScript",
+          description: "Application logic, typed frontend modules, API flows, and browser-side interactions.",
+        },
+        {
+          short: "API",
+          name: "REST API & Swagger",
+          description: "CRUD integration, request handling, API documentation, and data-driven interfaces.",
+        },
+        {
+          short: "UI",
+          name: "Vuetify, Bootstrap & Tailwind",
+          description: "Responsive layouts, component libraries, utility styling, and enterprise UI screens.",
+        },
+        {
+          short: "NODE",
+          name: "Node.js",
+          description: "Frontend tooling, package workflow, and JavaScript ecosystem support.",
+        },
+        {
+          short: "TOOLS",
+          name: "Git, Postman, Jira & Figma",
+          description: "API testing, version control, issue tracking, design collaboration, and delivery workflow.",
+        },
+        {
+          short: "AGILE",
+          name: "Agile / Scrum",
+          description: "Sprint planning, reviews, retrospectives, code review, and cross-browser testing.",
+        },
+      ],
+      contact: {
+        name: "",
+        email: "",
+        message: "",
+      },
+      architectureItems: [
+        {
+          index: "01",
+          title: "Component structure",
+          description: "Split UI into reusable components with clear props, predictable events, and consistent naming.",
+        },
+        {
+          index: "02",
+          title: "API integration",
+          description: "Map REST responses into UI-ready data, handle loading/error states, and keep flows easy to debug.",
+        },
+        {
+          index: "03",
+          title: "State management",
+          description: "Keep shared state intentional with Vuex patterns, local state boundaries, and route-aware behavior.",
+        },
+        {
+          index: "04",
+          title: "Responsive delivery",
+          description: "Build layouts that survive real content, cross-browser checks, review cycles, and maintenance.",
+        },
+      ],
+    };
   },
   methods: {
-    setupScrollAnimations() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2 });
-
-      // Observe all animatable elements
-      document.querySelectorAll('.service-card, .fade-in-up, .fade-in').forEach(el => {
-        observer.observe(el);
-      });
-    }
-  }
-}
+    submitContact() {
+      const subject = encodeURIComponent(`Portfolio inquiry from ${this.contact.name}`);
+      const body = encodeURIComponent(
+        `Name: ${this.contact.name}\nEmail: ${this.contact.email}\n\n${this.contact.message}`
+      );
+      window.location.href = `mailto:abiamuba8622@gmail.com?subject=${subject}&body=${body}`;
+    },
+  },
+};
 </script>
 
 <style scoped>
-/* Base styling */
 .home {
-  perspective: 1000px;
+  color: var(--primary-text);
 }
 
-/* Animation keyframes */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 2rem;
+  min-height: 46vh;
+  align-items: center;
 }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.main-name {
+  color: var(--primary-text);
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  margin-bottom: 1rem;
 }
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.hero-lead {
+  color: var(--secondary-text);
+  font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+  line-height: 1.65;
+  max-width: 680px;
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
 }
 
-@keyframes expandHr {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
+.primary-action,
+.secondary-action,
+.contact-strip a {
+  border-radius: 6px;
+  font-weight: 700;
+  padding: 0.85rem 1.15rem;
+  text-decoration: none;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
-  }
-
-  70% {
-    box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
-  }
+.primary-action,
+.contact-strip a {
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
+.secondary-action {
+  border: 1px solid var(--border-color);
+  color: var(--accent);
 }
 
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
-
-  50% {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
-  }
-
-  100% {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
+.primary-action:hover,
+.contact-strip a:hover {
+  background: #ffffff;
+  color: #10202b;
 }
 
-@keyframes rotate3d {
-  0% {
-    transform: rotate3d(0, 1, 0, 0deg);
-  }
-
-  100% {
-    transform: rotate3d(0, 1, 0, 360deg);
-  }
+.secondary-action:hover {
+  background: rgba(100, 255, 218, 0.12);
 }
 
-/* Animation classes */
-.animate-in {
-  opacity: 0;
-  animation-duration: 0.8s;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+.hero-panel,
+.focus-card,
+.contact-strip,
+.tech-card,
+.architecture-card,
+.contact-form-section {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
 }
 
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
+.hero-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
 }
 
-.fade-in-down {
-  animation-name: fadeInDown;
+.hero-panel div {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1rem;
 }
 
-.fade-in-up {
-  opacity: 0;
-  animation: fadeInUp 0.8s ease-out forwards;
+.hero-panel div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
-.slide-in-left {
-  opacity: 0;
-  animation: slideInLeft 0.8s ease-out forwards;
+.metric {
+  color: var(--accent);
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
 }
 
-.slide-in-right {
-  opacity: 0;
-  animation: slideInRight 0.8s ease-out forwards;
-  animation-delay: 0.2s;
+.hero-panel p,
+.focus-card p,
+.contact-strip p {
+  color: var(--muted-text);
+  line-height: 1.65;
+  margin: 0;
 }
 
-.expand-hr {
-  width: 0;
-  animation: expandHr 1.5s ease-out forwards;
-  animation-delay: 0.5s;
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 3rem 0;
 }
 
-/* Jumbotron styling with 3D effect */
-.jumbotron {
+.focus-card {
+  padding: 1.4rem;
+}
+
+.focus-index {
+  color: var(--accent);
+  display: block;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.focus-card h2,
+.contact-strip h2,
+.section-heading h2 {
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.tech-section {
+  margin: 3rem 0;
+}
+
+.architecture-section {
+  margin: 3rem 0;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+  max-width: 720px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
   position: relative;
-  transform-style: preserve-3d;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-  border-left: 4px solid #0d6efd;
 }
 
-.jumbotron:hover {
-  transform: translateY(-5px);
+.tech-grid::before {
+  background:
+    linear-gradient(90deg, transparent, var(--border-color), transparent),
+    linear-gradient(0deg, transparent, var(--border-color), transparent);
+  content: '';
+  inset: 12% 6%;
+  opacity: 0.45;
+  pointer-events: none;
+  position: absolute;
 }
 
-/* Button animations */
-.pulse-btn {
-  position: relative;
-  transition: all 0.3s ease;
-  animation: pulse 2s infinite;
-  border: none;
+.architecture-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.pulse-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+.architecture-card {
+  padding: 1.15rem;
 }
 
-.btn-text-wrapper {
+.architecture-card span {
+  color: var(--accent);
+  display: block;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.architecture-card h3 {
+  color: var(--primary-text);
+  font-size: 1.02rem;
+  margin-bottom: 0.5rem;
+}
+
+.architecture-card p {
+  color: var(--muted-text);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.tech-card {
+  align-items: flex-start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr;
+  padding: 1rem;
   position: relative;
   z-index: 1;
 }
 
-.pulse-btn::before {
+.tech-card::after {
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%);
   content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.6s;
-}
-
-.pulse-btn:hover::before {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Service cards styling */
-.service-card {
-  padding: 25px;
-  border-radius: 8px;
-  transition: all 0.4s ease;
-  background: rgba(0, 0, 0, 0.2);
-  border-bottom: 3px solid transparent;
+  inset: -20%;
   opacity: 0;
-  transform: translateY(20px);
-}
-
-.service-card:hover {
-  transform: translateY(-10px);
-  border-bottom: 3px solid #0d6efd;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.service-icon {
-  font-size: 2.5rem;
-  color: #0d6efd;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
-}
-
-.service-card:hover .service-icon {
-  transform: scale(1.2);
-}
-
-.service-title {
-  position: relative;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
-.service-title::after {
-  content: '';
+  pointer-events: none;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #0d6efd;
-  transition: width 0.4s ease;
+  transition: opacity 0.25s ease;
+  z-index: -1;
 }
 
-.service-card:hover .service-title::after {
-  width: 50px;
-}
-
-/* Floating contact button */
-.floating-btn {
-  position: relative;
-  transition: all 0.3s ease;
-  animation: float 3s ease-in-out infinite;
-}
-
-.floating-btn:hover {
-  background-color: #ffffff;
-  color: #343a40;
-  padding-right: 30px;
-}
-
-.btn-icon {
-  position: relative;
-  transition: all 0.3s ease;
-  opacity: 0;
-  right: -20px;
-}
-
-.floating-btn:hover .btn-icon {
+.tech-card:hover::after {
   opacity: 1;
-  right: 0;
 }
 
-/* Glowing text effect */
-.glow-text {
-  animation: glow 3s ease-in-out infinite;
+.tech-card span {
+  align-items: center;
+  background: var(--accent);
+  border-radius: 6px;
+  color: var(--accent-contrast);
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 900;
+  height: 44px;
+  justify-content: center;
+  width: 54px;
 }
 
-/* Scroll animation support */
-.in-view {
-  opacity: 1;
-  transform: translateY(0);
+.tech-card h3 {
+  color: var(--primary-text);
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.tech-card p {
+  color: var(--muted-text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.contact-strip {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.contact-form-section {
+  margin-top: 1rem;
+  padding: 1.5rem;
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contact-form label {
+  color: var(--primary-text);
+  display: grid;
+  font-weight: 800;
+  gap: 0.45rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: var(--surface-soft);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--primary-text);
+  font: inherit;
+  padding: 0.85rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.contact-form .full,
+.contact-form button {
+  grid-column: 1 / -1;
+}
+
+.contact-form button {
+  background: var(--accent);
+  border: 0;
+  border-radius: 6px;
+  color: var(--accent-contrast);
+  font-weight: 900;
+  padding: 0.9rem 1rem;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .focus-grid,
+  .contact-strip,
+  .tech-grid,
+  .architecture-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-strip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-actions a,
+  .contact-strip a,
+  .contact-form button {
+    text-align: center;
+    width: 100%;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

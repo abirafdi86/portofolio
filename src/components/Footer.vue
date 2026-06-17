@@ -14,11 +14,11 @@
       <div class="footer-section navigation">
         <h4 class="footer-heading">Navigation</h4>
         <ul class="footer-links">
-          <li><router-link to="/" @click.native="scrollToTop">Home</router-link></li>
-          <li><router-link to="/about-me" @click.native="scrollToTop">About Me</router-link></li>
-          <li><router-link to="/experience" @click.native="scrollToTop">Experience</router-link></li>
-          <li><router-link to="/project" @click.native="scrollToTop">Projects</router-link></li>
-          <li><router-link to="/gallery" @click.native="scrollToTop">Gallery</router-link></li>
+          <li><router-link to="/" @click="scrollToTop">Home</router-link></li>
+          <li><router-link to="/about-me" @click="scrollToTop">About Me</router-link></li>
+          <li><router-link to="/experience" @click="scrollToTop">Experience</router-link></li>
+          <li><router-link to="/project" @click="scrollToTop">Projects</router-link></li>
+          <li><router-link to="/gallery" @click="scrollToTop">Gallery</router-link></li>
         </ul>
       </div>
 
@@ -82,8 +82,9 @@ export default {
 
 <style scoped>
 .footer {
-  background-color: #0f172a;
-  color: #e6f1ff;
+  background-color: var(--surface-strong);
+  border-top: 1px solid var(--border-color);
+  color: var(--primary-text);
   padding: 3rem 2rem 1.5rem;
   position: relative;
   z-index: 5;
@@ -104,20 +105,20 @@ export default {
 }
 
 .footer-title {
-  color: #64ffda;
+  color: var(--accent);
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .footer-tagline {
-  color: #a8b2d1;
+  color: var(--muted-text);
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
 }
 
 .footer-heading {
-  color: #64ffda;
+  color: var(--accent);
   font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 1.2rem;
@@ -132,7 +133,7 @@ export default {
   left: 0;
   width: 40px;
   height: 2px;
-  background-color: #64ffda;
+  background-color: var(--accent);
 }
 
 .footer-links {
@@ -146,7 +147,7 @@ export default {
 }
 
 .footer-links li a {
-  color: #ccd6f6;
+  color: var(--secondary-text);
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
   display: inline-flex;
@@ -154,7 +155,7 @@ export default {
 }
 
 .footer-links li a:hover {
-  color: #64ffda;
+  color: var(--accent);
   transform: translateX(5px);
 }
 
@@ -170,7 +171,7 @@ export default {
 
 .footer-shape {
   fill: none;
-  stroke: #64ffda;
+  stroke: var(--accent);
   stroke-width: 3;
   animation: pulse 3s infinite ease-in-out;
 }
@@ -193,14 +194,14 @@ export default {
   text-align: center;
   padding-top: 2rem;
   margin-top: 2rem;
-  border-top: 1px solid rgba(100, 255, 218, 0.1);
+  border-top: 1px solid var(--border-color);
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .footer-bottom p {
-  color: #8892b0;
+  color: var(--muted-text);
   font-size: 0.9rem;
 }
 
